@@ -17,19 +17,18 @@ public class HotelReservationTest {
     }
 
     @Test
-    public void givenBookingDate_ShouldReturn_CheapestHotel(){
+    public void givenBookingDate_ShouldReturn_CheapestHotel() {
         SimpleDateFormat df = new SimpleDateFormat("ddMMMMyyyy");
-        String inputDateString [] = {"10Sep2020", "11Sep2020"};
+        String inputDateString[] = {"10Sep2020", "11Sep2020"};
 
-        Date inputDate [] = null;
+        Date inputDate[] = null;
         try {
             inputDate = new Date[]{df.parse(inputDateString[0]), df.parse(inputDateString[1])};
-        }
-        catch (ParseException e){
+        } catch (ParseException e) {
             System.out.println("Invalid Formate");
-            if (!df.format(inputDateString).equals(inputDate)){
+            if (!df.format(inputDateString).equals(inputDate)) {
                 System.out.println("Invalid Date!!");
-            }else
+            } else
                 System.out.println("Valid Date");
         }
         boolean result = hotelReservation.addHotel("Hyatt", 950.00) &&
@@ -37,5 +36,13 @@ public class HotelReservationTest {
                 hotelReservation.addHotel("Ginger", 1500.00);
         if (result)
             Assertions.assertEquals("Hyatt", hotelReservation.findCheapestHotel(inputDate));
+    }
+
+    @Test
+    public void givenWeekDayAndWeekendRatesForHotels_WhenAdded_ShouldReturn_TRUE() {
+        boolean result = hotelReservation.addHotelRates("Hyatt", 950.00, 1200.00) &&
+                hotelReservation.addHotelRates("Lemon Tree", 1200.00, 1350.00) &&
+                hotelReservation.addHotelRates("Ginger", 1500.00, 1800.00);
+        Assertions.assertTrue(result);
     }
 }
